@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $title = 'All Brands';
+        $brands = Brand::paginate(12);
+        return view('pages.brands.index',compact('brands','title'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function products(Brand $brand)
+    {
+        $title = 'Brand ('.$brand->name.') Products';
+        $products = Product::where('brand_id',$brand->id)->paginate(12);
+        return view('pages.brands.products',compact('products','title'));
+    }
+
     public function create()
     {
         //

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('qty');
             $table->decimal('total');
+            $table->enum('status',['paid','pending','canceled'])->default('pending');
             $table->timestamps();
         });
     }
