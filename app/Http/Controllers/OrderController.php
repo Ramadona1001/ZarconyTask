@@ -35,14 +35,20 @@ class OrderController extends Controller
         }
     }
 
-    public function index()
+    public function index($status = null)
     {
+        $orders = Order::query();
         $title = 'Orders';
-        if (auth()->user()->type == 'admin') {
-            $orders = Order::with('items')->paginate(10);
-        }else{
-            $orders = Order::with('items')->where('user_id',auth()->user()->id)->paginate(10);
+        if(auth()->user()->type != 'admin'){
+            $orders->where('user_id',auth()->user()->id);
         }
+        if ($status != null){
+            if (in_array($status,['pending','paid','canceled'])) {
+                $title = ucfirst($status).' Orders';
+                $orders->where('status',$status);
+            }
+        }
+        $orders = $orders->paginate(10);
         return view('pages.orders.index',compact('orders','title'));
     }
 

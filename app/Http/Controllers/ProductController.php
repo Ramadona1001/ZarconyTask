@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except([
+            'index'
+        ]);
+    }
+
     public function index()
     {
         $title = 'All Products';
@@ -16,12 +24,30 @@ class ProductController extends Controller
 
     public function create()
     {
-        //
+        $title = 'New Product';
+        $brands = Brand::all();
+        return view('pages.products.create',compact('brands','title'));
     }
 
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:2|max:255',
+            'sku' => 'required|unique:products,sku|max:255',
+            'details' => 'required|min:2',
+            'price' => 'required|numeric|min:0.1',
+            'brand' => 'required|exists:brands,id',
+        ]);
+
+        $product = new Product();
+        $product->title = $request->title;
+        $product->sku = $request->sku;
+        $product->details = $request->details;
+        $product->price = $request->price;
+        $product->brand_id = $request->brand;
+        $product->save();
+
+        return back()->with('success','Product created successfully');
     }
 
     public function show(Product $product)

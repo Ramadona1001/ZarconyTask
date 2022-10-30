@@ -10,6 +10,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5>Order #{{ ($index+1) }}</h5>
+                    <h5>Status : {{ $order->status }}</h5>
                     <h5>Total : ${{ $order->total }}</h5>
                 </div>
                 <div class="card-body">

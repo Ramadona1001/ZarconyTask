@@ -32,18 +32,21 @@ class BrandController extends Controller
 
     public function create()
     {
-        //
+        $title = 'New Brand';
+        return view('pages.brands.create',compact('title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $brand = new Brand();
+        $brand->name = $request->name;
+        $brand->save();
+
+        return back()->with('success','Brand created successfully');
     }
 
     /**
