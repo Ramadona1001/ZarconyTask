@@ -58,17 +58,35 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        //
+        $title = 'Update Product ('.$product->title.')';
+        $brands = Brand::all();
+        return view('pages.products.edit',compact('title','product','brands'));
     }
 
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:2|max:255',
+            'sku' => 'required|max:255|unique:products,sku,'.$product->id,
+            'details' => 'required|min:2',
+            'price' => 'required|numeric|min:0.1',
+            'brand' => 'required|exists:brands,id',
+        ]);
+
+        $product->title = $request->title;
+        $product->sku = $request->sku;
+        $product->details = $request->details;
+        $product->price = $request->price;
+        $product->brand_id = $request->brand;
+        $product->save();
+
+        return back()->with('success','Product updated successfully');
     }
 
-    public function destroy(Product $product)
+    public function delete(Product $product)
     {
-        //
+        $product->delete();
+        return back()->with('success','Product deleted successfully');
     }
 
 }
