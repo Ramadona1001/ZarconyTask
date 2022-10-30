@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except([
+            'index',
+            'products'
+        ]);
+    }
+
     public function index()
     {
         $title = 'All Brands';

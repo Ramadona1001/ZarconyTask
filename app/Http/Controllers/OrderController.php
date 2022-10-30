@@ -3,18 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function checkout()
+    {
+        $cart = session('cart');
+        if ($cart) {
+            $order = new Order();
+            $order->user_id = auth()->user()->id;
+            $order->save();
+            foreach ($cart  as $id => $details) {
+                $item = new OrderItem();
+                $item->order_id = $order->id;
+                $item->product_id = $id;
+                $item->qty = $details['quantity'];
+                $item->total = $details['quantity'] * $details['price'];
+                $item->save();
+            }
+            session()->forget('cart');
+            return redirect()->route('products')->with('success', 'Done checkout');
+        }else{
+            return redirect()->route('products');
+        }
+    }
+
     public function index()
     {
-        //
+        $title = 'Orders';
+        if (auth()->user()->type == 'admin') {
+            $orders = Order::with('items')->paginate(10);
+        }else{
+            $orders = Order::with('items')->where('user_id',auth()->user()->id)->paginate(10);
+        }
+        return view('pages.orders.index',compact('orders','title'));
     }
 
     /**

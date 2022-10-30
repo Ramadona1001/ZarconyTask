@@ -6,7 +6,7 @@
 <h4 class="fw-bold text-decoration-underline text-center mb-4">@yield('title')</h4>
 <div class="row">
     @foreach ($brands as $brand)
-        @include('components.brand-card',['brand'=>$brand])
+        @include('pages.components.brand-card',['brand'=>$brand])
     @endforeach
 </div>
 <div class="row">

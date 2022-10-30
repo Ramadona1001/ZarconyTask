@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Register')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -58,6 +60,20 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="mobile" class="col-md-4 col-form-label text-md-end">{{ __('Mobile No.') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('email') }}" required>
+
+                                @error('mobile')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 
