@@ -52,6 +52,10 @@ Route::delete('remove-from-cart', [App\Http\Controllers\CartController::class, '
 
 // Order
 Route::get('orders/{status?}', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
+Route::get('change-order/{order}/{status}', [App\Http\Controllers\OrderController::class, 'changeOrder'])->name('changer_order');
 Route::post('checkout', [App\Http\Controllers\OrderController::class, 'checkout'])->name('checkout');
+
+// Activity Log
+Route::get('/activity-log', [App\Http\Controllers\ActivityLogController::class, 'index'])->name('activity_log');
 
 Auth::routes();

@@ -27,6 +27,7 @@ class BrandController extends Controller
     {
         $title = 'Brand ('.$brand->name.') Products';
         $products = Product::where('brand_id',$brand->id)->paginate(12);
+        addToActivity(auth()->user()->id,'Vist products of brand '.$brand->name);
         return view('pages.brands.products',compact('products','title'));
     }
 
@@ -45,7 +46,7 @@ class BrandController extends Controller
         $brand = new Brand();
         $brand->name = $request->name;
         $brand->save();
-
+        addToActivity(auth()->user()->id,'Create New Brand that name is '.$brand->name);
         return back()->with('success','Brand created successfully');
     }
 
@@ -63,12 +64,13 @@ class BrandController extends Controller
 
         $brand->name = $request->name;
         $brand->save();
-
+        addToActivity(auth()->user()->id,'Update Brand that name is '.$brand->name);
         return back()->with('success','Brand updated successfully');
     }
 
     public function delete(Brand $brand)
     {
+        addToActivity(auth()->user()->id,'Delete Brand that name is '.$brand->name);
         $brand->delete();
         return back()->with('success','Brand deleted successfully');
     }

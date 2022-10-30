@@ -33,6 +33,7 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
+        addToActivity(auth()->user()->id,'Add Products to cart');
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
@@ -42,6 +43,7 @@ class CartController extends Controller
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
+            addToActivity(auth()->user()->id,'Update cart');
             session()->flash('success', 'Cart updated successfully');
         }
     }
@@ -56,5 +58,6 @@ class CartController extends Controller
             }
             session()->flash('success', 'Product removed successfully');
         }
+        addToActivity(auth()->user()->id,'Remove Products from cart');
     }
 }

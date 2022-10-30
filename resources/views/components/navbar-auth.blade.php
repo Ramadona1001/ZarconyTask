@@ -54,6 +54,7 @@
                 <a class="dropdown-item" href="{{ route('create_users') }}">New User</a>
                 <a class="dropdown-item" href="{{ route('create_brands') }}">New Brand</a>
                 <a class="dropdown-item" href="{{ route('create_products') }}">New Product</a>
+                <a class="dropdown-item" href="{{ route('activity_log') }}">Activity Log</a>
             @endif
 
             <a class="dropdown-item" href="{{ route('logout') }}"

@@ -49,6 +49,8 @@ class UserController extends Controller
         $user->type = $request->type;
         $user->save();
 
+        addToActivity(auth()->user()->id,'Add New User that name is '.$user->name);
+
         return back()->with('success','User created successfully');
     }
 
@@ -84,6 +86,8 @@ class UserController extends Controller
         $user->type = $request->type;
         $user->save();
 
+        addToActivity(auth()->user()->id,'Update User that name is '.$user->name);
+
         return back()->with('success','User updated successfully');
     }
 
@@ -91,6 +95,7 @@ class UserController extends Controller
     {
         if (auth()->user()->type != 'admin')
             abort(403);
+        addToActivity(auth()->user()->id,'Delete User that name is '.$user->name);
         $user->delete();
         return back()->with('success','User deleted successfully');
     }

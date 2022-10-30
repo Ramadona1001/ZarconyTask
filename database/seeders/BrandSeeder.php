@@ -16,6 +16,6 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-
+        Brand::factory()->count(1000)->create();
     }
 }

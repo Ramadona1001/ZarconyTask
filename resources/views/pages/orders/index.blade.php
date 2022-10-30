@@ -33,6 +33,14 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="card-footer">
+                    @if (auth()->user()->id == $order->user_id)
+                        @if ($order->status == 'pending')
+                            <a href="{{ route('changer_order',['order'=>$order,'status'=>'paid']) }}" class="btn btn-success btn-sm">Pay</a>
+                            <a href="{{ route('changer_order',['order'=>$order,'status'=>'canceled']) }}" class="btn btn-danger btn-sm">Cancel</a>
+                        @endif
+                    @endif
+                </div>
             </div>
         </div>
     @endforeach

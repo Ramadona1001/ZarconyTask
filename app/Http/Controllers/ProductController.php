@@ -47,6 +47,8 @@ class ProductController extends Controller
         $product->brand_id = $request->brand;
         $product->save();
 
+        addToActivity(auth()->user()->id,'Add New Product that name is '.$product->title);
+
         return back()->with('success','Product created successfully');
     }
 
@@ -80,11 +82,14 @@ class ProductController extends Controller
         $product->brand_id = $request->brand;
         $product->save();
 
+        addToActivity(auth()->user()->id,'Update Product that name is '.$product->title);
+
         return back()->with('success','Product updated successfully');
     }
 
     public function delete(Product $product)
     {
+        addToActivity(auth()->user()->id,'Delete Product that name is '.$product->title);
         $product->delete();
         return back()->with('success','Product deleted successfully');
     }

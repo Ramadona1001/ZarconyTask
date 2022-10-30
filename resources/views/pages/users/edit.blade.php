@@ -40,7 +40,7 @@
                 <div class="form-group mb-3">
                     <label for="type">Type</label>
                     <select name="type" required id="type" class="form-control">
-                        @foreach (['user','admin'] as $type)
+                        @foreach (['client','admin'] as $type)
                             <option value="{{ $type }}" @if($user->type == $type) selected @endif>{{ $type }}</option>
                         @endforeach
                     </select>

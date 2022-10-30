@@ -41,7 +41,7 @@
                     <label for="type">Type</label>
                     <select name="type" required id="type" class="form-control">
                         <option value="">Select Type</option>
-                        @foreach (['user','admin'] as $type)
+                        @foreach (['client','admin'] as $type)
                             <option value="{{ $type }}">{{ $type }}</option>
                         @endforeach
                     </select>
